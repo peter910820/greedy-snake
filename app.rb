@@ -19,12 +19,39 @@ class GreedySnack
       x, y = body
       TkcRectangle.new(@canvas, x, y, x+50, y+40, "fill"=>"green")
     end
+
+    @canvas.bind("KeyPress") { |event| key_press(event) }
+    @canvas.focus
+
+    fruit
   end
 
   def fruit
-      
+    TkcRectangle.new(@canvas, 200, 200, 250, 240, "fill"=>"red")
   end
   
+  def key_press(event)
+    @running = false
+    case event.keysym
+    when "Left"
+      puts ""
+    when "Right"
+      unless @running
+        @running = true
+        Thread.new do
+          while @running
+            puts "r"
+            sleep 0.5
+          end
+        end
+      end
+    when "Up"
+      puts ""
+    when "Down"
+      puts ""
+    end
+  end
+
   def run
     Tk.mainloop
   end
